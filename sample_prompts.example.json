@@ -1,0 +1,18 @@
+[
+  {
+    "category": "Graph Schema & Discovery",
+    "prompts": [
+      "What node types and relationship types exist in the graph?",
+      "Summarize the number of nodes for each label in the graph.",
+      "Show a sample of 10 nodes and their properties."
+    ]
+  },
+  {
+    "category": "Connectivity & Path Exploration",
+    "prompts": [
+      "Show a sample of connected node pairs and the edges between them.",
+      "Which nodes have the highest number of connected edges?",
+      "Find multi-hop paths connecting nodes in the graph."
+    ]
+  }
+]

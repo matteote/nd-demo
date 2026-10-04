@@ -1,0 +1,216 @@
+<!--
+ Copyright 2026 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransportGraph Console — Spanner Graph NL2GQL Assistant</title>
+  <meta name="description" content="Natural language interface for querying property graphs on Google Cloud Spanner Graph." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="top-header" id="top-header">
+      <div class="brand-group">
+        <button class="icon-btn mobile-menu-btn" id="btn-toggle-sidebar" title="Toggle sample prompts sidebar" aria-label="Toggle sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="5" cy="12" r="2.5"></circle>
+            <circle cx="12" cy="6" r="2.5"></circle>
+            <circle cx="19" cy="12" r="2.5"></circle>
+            <circle cx="12" cy="18" r="2.5"></circle>
+            <line x1="7.2" y1="10.5" x2="9.8" y2="7.5"></line>
+            <line x1="14.2" y1="7.5" x2="16.8" y2="10.5"></line>
+            <line x1="7.2" y1="13.5" x2="9.8" y2="16.5"></line>
+            <line x1="14.2" y1="16.5" x2="16.8" y2="13.5"></line>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1 class="brand-title">TransportGraph Console</h1>
+          <span class="brand-subtitle">Graph Conversational Assistant</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <label class="mode-toggle" for="toggle-sample-prompts" title="Show or hide sample graph prompts in the sidebar and welcome screen (default controlled by SHOW_SAMPLE_PROMPTS).">
+          <input type="checkbox" id="toggle-sample-prompts" checked />
+          <span class="mode-toggle-track">
+            <span class="mode-toggle-thumb"></span>
+          </span>
+          <span class="mode-toggle-text" id="toggle-prompts-label">Sample Prompts</span>
+        </label>
+
+        <label class="mode-toggle" for="toggle-execute-query" title="When ON (default), QueryData both generates and executes the query in a single call. When OFF, QueryData generates the query and the ADK Spanner tool executes it.">
+          <input type="checkbox" id="toggle-execute-query" checked />
+          <span class="mode-toggle-track">
+            <span class="mode-toggle-thumb"></span>
+          </span>
+          <span class="mode-toggle-text" id="toggle-execute-label">QueryData Direct</span>
+        </label>
+
+        <button class="btn btn-secondary" id="btn-toggle-topology" title="Show or hide the interactive topology map" hidden>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          <span>Topology Map</span>
+        </button>
+
+        <button class="btn btn-primary" id="btn-new-session" title="Start a fresh conversation session">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>New Chat</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <div class="workspace-grid" id="workspace-grid">
+      <!-- Left Sidebar: Sample Prompts & Schema Reference -->
+      <aside class="sidebar" id="sidebar" aria-label="Sample Graph Queries">
+        <div class="sidebar-section">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">Sample Graph Prompts</h2>
+            <span class="sidebar-hint">Click any query to run</span>
+          </div>
+          <div class="prompt-categories" id="prompt-categories">
+            <!-- Populated dynamically from /api/config -->
+          </div>
+        </div>
+
+        <div class="sidebar-section schema-reference">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">Schema Grounding</h2>
+            <span class="schema-tag">GQL</span>
+          </div>
+          <div class="schema-summary">
+            <div class="schema-group">
+              <span class="schema-group-title">Active Tools</span>
+              <div class="schema-badges">
+                <span class="schema-chip chip-loglink" title="Gemini Data Analytics NL2GQL">query_graph_data</span>
+                <span class="schema-chip chip-ne" title="Read-Only Cloud Spanner Query Execution">execute_spanner_query</span>
+                <span class="schema-chip chip-physlink" title="INFORMATION_SCHEMA.PROPERTY_GRAPHS">inspect_graph_schema</span>
+              </div>
+            </div>
+            <div class="schema-group">
+              <span class="schema-group-title">Custom Sample Prompts</span>
+              <ul class="schema-edges-list">
+                <li>Copy <code>sample_prompts.example.json</code> to <code>sample_prompts.json</code> (or set <code>SAMPLE_PROMPTS_FILE</code>) to load custom queries.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center/Right Main Area -->
+      <main class="main-stage">
+        <!-- Interactive Network Topology Panel (shown when topology.json is present) -->
+        <section class="topology-panel collapsed" id="topology-panel" aria-label="Graph Topology">
+          <div class="topology-toolbar">
+            <div class="topology-toolbar-left">
+              <span class="topology-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                Graph Topology · <code id="topology-graph-name">TransportGraph</code>
+              </span>
+              <div class="topology-legend">
+                <span class="legend-item"><span class="legend-dot dot-ne"></span>Nodes</span>
+                <span class="legend-item"><span class="legend-line line-section"></span>Physical Links</span>
+                <span class="legend-item"><span class="legend-line line-trail"></span>Logical Links</span>
+              </div>
+            </div>
+            <div class="topology-toolbar-right">
+              <button class="btn-xs" id="btn-clear-highlights" hidden>Clear Highlights</button>
+              <button class="btn-xs" id="btn-collapse-topology" title="Minimize topology diagram">Hide Map</button>
+            </div>
+          </div>
+
+          <div class="topology-canvas-wrap">
+            <svg id="topology-svg" viewBox="0 0 740 345" role="img" aria-label="Interactive graph topology diagram">
+              <!-- Populated by app.js -->
+            </svg>
+
+            <!-- Selected Entity Quick Inspector -->
+            <div class="entity-inspector" id="entity-inspector" hidden>
+              <div class="inspector-header">
+                <div class="inspector-title-wrap">
+                  <span class="inspector-badge" id="inspector-badge">Node</span>
+                  <strong id="inspector-name">Selected Entity</strong>
+                </div>
+                <button class="icon-btn-sm" id="btn-close-inspector" aria-label="Close inspector">&times;</button>
+              </div>
+              <div class="inspector-meta" id="inspector-meta"></div>
+              <div class="inspector-actions">
+                <button class="btn-xs btn-accent" id="btn-inspect-query">Inspect in Chat</button>
+                <button class="btn-xs btn-warn" id="btn-inspect-outage">Analyze Impact</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Conversation Stream -->
+        <section class="chat-stream" id="chat-messages" aria-live="polite">
+          <!-- Welcome Card rendered initially by app.js -->
+        </section>
+
+        <!-- Prompt Input Composer -->
+        <footer class="composer-bar">
+          <form id="chat-form" class="composer-form">
+            <div class="composer-input-wrap">
+              <textarea
+                id="chat-input"
+                rows="1"
+                placeholder="Ask a natural language question about nodes, relationships, paths, or graph analytics…"
+                aria-label="Ask a question about the property graph"
+                required
+              ></textarea>
+              <div class="composer-controls">
+                <span class="session-indicator" id="session-indicator" title="Active ADK Session ID">Session: ready</span>
+                <button type="submit" class="btn btn-send" id="btn-send">
+                  <span>Run Query</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
