@@ -240,6 +240,7 @@ def test_web_server_endpoints(tmp_path, monkeypatch):
   assert resp_index.status_code == 200
   assert "TransportGraph Console" in resp_index.text
   assert "env-project-badge" not in resp_index.text
+  assert "toggle-theme" in resp_index.text
 
   # 2. Healthz
   resp_health = client.get("/healthz")
@@ -281,6 +282,18 @@ def test_web_server_endpoints(tmp_path, monkeypatch):
   assert topo_data["graph_id"] == "TransportGraph"
   assert topo_data["nodes"] == []
   assert topo_data["links"] == []
+
+  custom_topo_file = tmp_path / "custom_topology.json"
+  custom_topo_file.write_text(
+      json.dumps({"graph_id": "TransportGraph", "nodes": [{"id": "NODE-A", "x": 100, "y": 100}], "links": []}),
+      encoding="utf-8",
+  )
+  monkeypatch.setenv("TOPOLOGY_FILE", str(custom_topo_file))
+  resp_custom_topo = client.get("/api/topology")
+  assert resp_custom_topo.status_code == 200
+  assert len(resp_custom_topo.json()["nodes"]) == 1
+  assert resp_custom_topo.json()["nodes"][0]["id"] == "NODE-A"
+  monkeypatch.delenv("TOPOLOGY_FILE", raising=False)
 
   # 6. CSRF header check on POST /api/sessions
   resp_no_csrf = client.post("/api/sessions", json={})

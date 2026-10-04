@@ -56,6 +56,14 @@
       </div>
 
       <div class="header-actions">
+        <label class="mode-toggle" for="toggle-theme" title="Switch between Dark and Light mode">
+          <input type="checkbox" id="toggle-theme" />
+          <span class="mode-toggle-track">
+            <span class="mode-toggle-thumb"></span>
+          </span>
+          <span class="mode-toggle-text" id="toggle-theme-label">Light Mode</span>
+        </label>
+
         <label class="mode-toggle" for="toggle-sample-prompts" title="Show or hide sample graph prompts in the sidebar and welcome screen (default controlled by SHOW_SAMPLE_PROMPTS).">
           <input type="checkbox" id="toggle-sample-prompts" checked />
           <span class="mode-toggle-track">
@@ -120,9 +128,10 @@
               </div>
             </div>
             <div class="schema-group">
-              <span class="schema-group-title">Custom Sample Prompts</span>
+              <span class="schema-group-title">Custom Prompts &amp; Topology</span>
               <ul class="schema-edges-list">
                 <li>Copy <code>sample_prompts.example.json</code> to <code>sample_prompts.json</code> (or set <code>SAMPLE_PROMPTS_FILE</code>) to load custom queries.</li>
+                <li>Copy <code>topology.example.json</code> to <code>topology.json</code> (or set <code>TOPOLOGY_FILE</code>) to display a custom topology map.</li>
               </ul>
             </div>
           </div>

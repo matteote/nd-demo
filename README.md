@@ -74,6 +74,7 @@ To remove the Cloud Run service without touching the Cloud Spanner database:
 | `GEMINI_MODEL` | `gemini-3.8-flash` | Vertex AI Gemini model name. |
 | `SHOW_SAMPLE_PROMPTS` | `true` | Controls whether the sample prompts sidebar and starter cards are visible by default when the Web UI loads (`true` or `false`). Users can also toggle visibility live in the top header. |
 | `SAMPLE_PROMPTS_FILE` | `prompts.json` *(optional)* | Path to an optional JSON file with dataset-specific sample prompts for the Web UI. |
+| `TOPOLOGY_FILE` | `topology.json` *(optional)* | Path to an optional JSON file defining the interactive SVG topology map in the Web UI. |
 
 ### Customizing Sample Prompts
 
@@ -97,6 +98,22 @@ An example sample prompts file is provided in [`sample_prompts.example.json`](sa
    ]
    ```
 3. To hide sample prompts by default when opening the Web UI, set `SHOW_SAMPLE_PROMPTS=false` in `.env` (you can still show or hide them at any time using the **Sample Prompts** toggle in the top header).
+
+### Customizing the Graph Topology Map
+
+An example topology file is provided in [`topology.example.json`](topology.example.json). When a topology file is configured, the Web UI displays an interactive SVG topology map (`viewBox="0 0 740 345"`) that automatically highlights entities returned by query results:
+
+1. Copy the example file to `topology.json` (or `local_data/topology.json`, which is gitignored) and customize your nodes and links:
+   ```bash
+   cp topology.example.json topology.json
+   ```
+   *(Alternatively, set `TOPOLOGY_FILE=/path/to/your_topology.json` in `.env`.)*
+2. The JSON object supports the following structure:
+   - `"graph_id"`: Name of the property graph displayed in the topology toolbar.
+   - `"nodes"`: Array of node objects (`{ "id", "name", "short_name", "type", "vendor", "x", "y" }`), where `x` (`0–740`) and `y` (`0–345`) position each node on the SVG canvas.
+   - `"links"`: Array of physical links (`{ "id", "name", "source_ne", "target_ne", "ports", "carries_trail" }`) connecting two node `id`s.
+   - `"trails"`: Optional array of logical paths (`{ "id", "name", "termination_points", "sections" }`).
+   - `"ports"` & `"termination_points"`: Optional arrays of sub-node endpoints (`{ "id", "name", "ne_id" }`) mapped to their parent node (`ne_id`) so that query results mentioning an endpoint also highlight its parent node.
 
 ---
 

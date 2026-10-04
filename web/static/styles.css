@@ -43,6 +43,15 @@
   --accent-coral: hsl(4, 82%, 62%);
   --accent-coral-soft: hsla(4, 82%, 62%, 0.15);
 
+  /* Component-specific surface tokens */
+  --btn-primary-text: hsl(215, 35%, 8%);
+  --topology-bg: radial-gradient(circle at 50% 45%, hsl(214, 28%, 12%), hsl(214, 32%, 8%));
+  --svg-link-stroke: hsl(214, 22%, 36%);
+  --svg-ne-fill: hsl(214, 28%, 13%);
+  --svg-ne-hover-fill: hsl(214, 26%, 18%);
+  --code-text: hsl(195, 35%, 92%);
+  --gql-intent-bg: hsla(214, 28%, 12%, 0.7);
+
   /* Fonts & Sizing */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -51,6 +60,47 @@
   --radius-md: 10px;
   --radius-lg: 14px;
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="light"] {
+  /* Core Surfaces (Light Console) */
+  --bg-canvas: hsl(210, 28%, 97%);
+  --bg-panel: #ffffff;
+  --bg-elevated: hsl(210, 25%, 94%);
+  --bg-card: #ffffff;
+  --bg-hover: hsl(210, 24%, 90%);
+  --bg-code: hsl(210, 28%, 95%);
+
+  /* Borders & Dividers */
+  --border-subtle: hsl(214, 22%, 86%);
+  --border-strong: hsl(214, 20%, 74%);
+  --border-accent: hsla(195, 88%, 38%, 0.4);
+
+  /* Typography */
+  --text-primary: hsl(215, 32%, 12%);
+  --text-secondary: hsl(215, 20%, 33%);
+  --text-muted: hsl(215, 15%, 48%);
+
+  /* Functional Accents */
+  --accent-cyan: hsl(195, 90%, 36%);
+  --accent-cyan-soft: hsla(195, 90%, 36%, 0.11);
+  --accent-emerald: hsl(154, 78%, 32%);
+  --accent-emerald-soft: hsla(154, 78%, 32%, 0.12);
+  --accent-amber: hsl(34, 92%, 38%);
+  --accent-amber-soft: hsla(34, 92%, 38%, 0.12);
+  --accent-coral: hsl(4, 78%, 46%);
+  --accent-coral-soft: hsla(4, 78%, 46%, 0.11);
+
+  /* Component-specific surface tokens */
+  --btn-primary-text: #ffffff;
+  --topology-bg: radial-gradient(circle at 50% 45%, hsl(210, 40%, 99%), hsl(214, 30%, 92%));
+  --svg-link-stroke: hsl(214, 20%, 60%);
+  --svg-ne-fill: #ffffff;
+  --svg-ne-hover-fill: hsl(154, 65%, 95%);
+  --code-text: hsl(215, 35%, 16%);
+  --gql-intent-bg: hsl(210, 26%, 92%);
+
+  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.10);
 }
 
 *,
@@ -252,7 +302,7 @@ pre {
 
 .btn-primary {
   background: var(--accent-cyan);
-  color: hsl(215, 35%, 8%);
+  color: var(--btn-primary-text);
   font-weight: 600;
 }
 
@@ -578,7 +628,7 @@ pre {
 }
 
 .line-section {
-  background: hsl(214, 22%, 45%);
+  background: var(--svg-link-stroke);
 }
 
 .line-trail {
@@ -599,7 +649,7 @@ pre {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 45%, hsl(214, 28%, 12%), hsl(214, 32%, 8%));
+  background: var(--topology-bg);
   overflow: hidden;
 }
 
@@ -615,7 +665,7 @@ pre {
 }
 
 .svg-link-line {
-  stroke: hsl(214, 22%, 36%);
+  stroke: var(--svg-link-stroke);
   stroke-width: 3.5;
   transition: stroke 0.2s ease, stroke-width 0.2s ease;
 }
@@ -666,14 +716,14 @@ pre {
 }
 
 .svg-ne-circle {
-  fill: hsl(214, 28%, 13%);
+  fill: var(--svg-ne-fill);
   stroke: var(--accent-emerald);
   stroke-width: 2.5;
   transition: all 0.2s ease;
 }
 
 .svg-ne-group:hover .svg-ne-circle {
-  fill: hsl(214, 26%, 18%);
+  fill: var(--svg-ne-hover-fill);
   stroke-width: 3.5;
 }
 
@@ -979,7 +1029,7 @@ pre {
   overflow-x: auto;
   font-size: 12.2px;
   line-height: 1.5;
-  color: hsl(195, 35%, 92%);
+  color: var(--code-text);
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -987,7 +1037,7 @@ pre {
 .gql-intent {
   padding: 8px 14px;
   border-top: 1px solid var(--border-subtle);
-  background: hsla(214, 28%, 12%, 0.7);
+  background: var(--gql-intent-bg);
   font-size: 12px;
   color: var(--text-secondary);
 }
@@ -1193,7 +1243,7 @@ pre {
 
 .btn-send {
   background: var(--accent-cyan);
-  color: hsl(215, 35%, 8%);
+  color: var(--btn-primary-text);
   font-weight: 600;
   padding: 8px 15px;
 }

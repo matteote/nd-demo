@@ -71,5 +71,5 @@ The agent is decoupled from any specific dataset or domain schema:
     }
   ]
   ```
-- **Sample Prompts Visibility (`SHOW_SAMPLE_PROMPTS`)**: Set `SHOW_SAMPLE_PROMPTS=false` in `.env` (default `true`) to hide the sample prompts sidebar and starter cards by default when the Web UI loads. Users can also toggle sample prompts on or off at any time using the **Sample Prompts** toggle in the top header.
-- **Optional Topology Map (`topology.json` / `TOPOLOGY_FILE`)**: If a `topology.json` file is provided in `local_data/topology.json`, the repository root, or via `TOPOLOGY_FILE`, the Web UI enables an interactive SVG topology map that highlights matched entities returned by tool executions.
+- **Sample Prompts Visibility (`SHOW_SAMPLE_PROMPTS`)**: Set `SHOW_SAMPLE_PROMPTS=false` in `.env` (default `true`) to hide the sample prompts sidebar and starter cards by default when the Web UI loads. Users can also toggle sample prompts on or off at any time using the **Sample Prompts** toggle in the top header, or switch between **Dark Mode** and **Light Mode** using the theme toggle.
+- **Optional Topology Map (`topology.example.json` / `TOPOLOGY_FILE`)**: An example topology file is provided at [`topology.example.json`](../topology.example.json). Copy it to `topology.json` (or `local_data/topology.json`, which is gitignored) or set `TOPOLOGY_FILE=/path/to/topology.json` in `.env` to enable the interactive SVG topology map that highlights matched entities returned by tool executions.

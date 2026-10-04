@@ -1,0 +1,68 @@
+{
+  "graph_id": "TransportGraph",
+  "nodes": [
+    {
+      "id": "NODE-A",
+      "name": "Core Switch Alpha",
+      "short_name": "Alpha",
+      "type": "Router",
+      "vendor": "Generic",
+      "x": 140,
+      "y": 180
+    },
+    {
+      "id": "NODE-B",
+      "name": "Aggregation Switch Beta",
+      "short_name": "Beta",
+      "type": "Switch",
+      "vendor": "Generic",
+      "x": 370,
+      "y": 240
+    },
+    {
+      "id": "NODE-C",
+      "name": "Core Switch Gamma",
+      "short_name": "Gamma",
+      "type": "Router",
+      "vendor": "Generic",
+      "x": 600,
+      "y": 180
+    }
+  ],
+  "ports": [
+    { "id": "PORT-A1", "name": "eth0/1", "ne_id": "NODE-A" },
+    { "id": "PORT-B1", "name": "eth0/1", "ne_id": "NODE-B" },
+    { "id": "PORT-B2", "name": "eth0/2", "ne_id": "NODE-B" },
+    { "id": "PORT-C1", "name": "eth0/1", "ne_id": "NODE-C" }
+  ],
+  "termination_points": [
+    { "id": "TP-A1", "name": "CTP-1", "ne_id": "NODE-A" },
+    { "id": "TP-C1", "name": "CTP-2", "ne_id": "NODE-C" }
+  ],
+  "links": [
+    {
+      "id": "LINK-AB",
+      "name": "Alpha-Beta Link",
+      "source_ne": "NODE-A",
+      "target_ne": "NODE-B",
+      "ports": ["PORT-A1", "PORT-B1"],
+      "carries_trail": "TRAIL-AC"
+    },
+    {
+      "id": "LINK-BC",
+      "name": "Beta-Gamma Link",
+      "source_ne": "NODE-B",
+      "target_ne": "NODE-C",
+      "ports": ["PORT-B2", "PORT-C1"],
+      "carries_trail": "TRAIL-AC"
+    }
+  ],
+  "trails": [
+    {
+      "id": "TRAIL-AC",
+      "name": "Alpha-to-Gamma End-to-End Trail",
+      "termination_points": ["TP-A1", "TP-C1"],
+      "sections": ["LINK-AB", "LINK-BC"]
+    }
+  ]
+}

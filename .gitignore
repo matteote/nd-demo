@@ -33,6 +33,7 @@ sample_prompts.json
 sample_projects.json
 !sample_prompts.example.json
 topology.json
+!topology.example.json
 schema.sql
 
 # IDE & OS

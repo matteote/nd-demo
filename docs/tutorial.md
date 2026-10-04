@@ -63,14 +63,18 @@ Click the first sample prompt in the left sidebar:
 Ask a multi-hop connectivity question or click one of the connectivity prompts in the sidebar:
 > *"Show a sample of connected node pairs and the edges between them."*
 
-### 3. Loading & Toggling Custom Sample Prompts (Optional)
-- Use [`sample_prompts.example.json`](../sample_prompts.example.json) as a template to create your own dataset-specific prompts:
+### 3. Loading & Toggling Custom Sample Prompts and Topology (Optional)
+- **Custom Sample Prompts:** Use [`sample_prompts.example.json`](../sample_prompts.example.json) as a template to create your own dataset-specific prompts:
   ```bash
   cp sample_prompts.example.json sample_prompts.json
   ```
   *(Or place it in `local_data/sample_prompts.json` or set `SAMPLE_PROMPTS_FILE=/path/to/prompts.json` in `.env`.)*
-- Refresh the browser to see your custom prompt categories in the left sidebar and welcome screen.
-- You can show or hide the sample prompts at any time using the **Sample Prompts** toggle in the top header, or set `SHOW_SAMPLE_PROMPTS=false` in `.env` to hide them by default.
+- **Custom Topology Map:** Use [`topology.example.json`](../topology.example.json) as a template to configure the interactive SVG topology map:
+  ```bash
+  cp topology.example.json topology.json
+  ```
+  *(Or place it in `local_data/topology.json` or set `TOPOLOGY_FILE=/path/to/topology.json` in `.env`.)*
+- **Header Toggles:** Refresh the browser to see your custom prompts and topology map. Use the top header toggles to switch between **Dark Mode** and **Light Mode**, show/hide **Sample Prompts** (or set `SHOW_SAMPLE_PROMPTS=false` in `.env`), and switch between **QueryData Direct** and **2-Step** execution.
 
 ---
 

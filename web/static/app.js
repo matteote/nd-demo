@@ -25,6 +25,7 @@
 
   const state = {
     sessionId: null,
+    theme: 'dark',
     executeQuery: true,
     showSamplePrompts: true,
     isStreaming: false,
@@ -35,6 +36,8 @@
   };
 
   // DOM References
+  const elToggleTheme = document.getElementById('toggle-theme');
+  const elToggleThemeLabel = document.getElementById('toggle-theme-label');
   const elTogglePrompts = document.getElementById('toggle-sample-prompts');
   const elToggleExecute = document.getElementById('toggle-execute-query');
   const elToggleExecuteLabel = document.getElementById('toggle-execute-label');
@@ -70,6 +73,7 @@
   // Initialization
   // =========================================================================
   async function init() {
+    initTheme();
     bindEvents();
     renderWelcomeState();
 
@@ -89,6 +93,33 @@
       await createNewSession(false);
     } catch (err) {
       console.error('Initialization error:', err);
+    }
+  }
+
+  function initTheme() {
+    try {
+      const saved = localStorage.getItem('spanner_graph_theme');
+      if (saved === 'light' || saved === 'dark') {
+        state.theme = saved;
+      }
+    } catch (_) {
+      // Ignore storage access errors
+    }
+    applyTheme();
+  }
+
+  function applyTheme() {
+    const isLight = state.theme === 'light';
+    if (isLight) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    if (elToggleTheme) {
+      elToggleTheme.checked = isLight;
+    }
+    if (elToggleThemeLabel) {
+      elToggleThemeLabel.textContent = isLight ? 'Light Mode' : 'Dark Mode';
     }
   }
 
@@ -944,6 +975,18 @@
       elChatInput.style.height = 'auto';
       elChatInput.style.height = `${Math.min(elChatInput.scrollHeight, 130)}px`;
     });
+
+    if (elToggleTheme) {
+      elToggleTheme.addEventListener('change', () => {
+        state.theme = elToggleTheme.checked ? 'light' : 'dark';
+        try {
+          localStorage.setItem('spanner_graph_theme', state.theme);
+        } catch (_) {
+          // Ignore storage access errors
+        }
+        applyTheme();
+      });
+    }
 
     if (elTogglePrompts) {
       elTogglePrompts.addEventListener('change', () => {
