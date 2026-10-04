@@ -15,6 +15,8 @@
  */
 
 :root {
+  color-scheme: dark;
+
   /* Core Surfaces (HSL Dark Slate Console) */
   --bg-canvas: hsl(214, 32%, 7%);
   --bg-panel: hsl(214, 28%, 10%);
@@ -62,45 +64,49 @@
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-:root[data-theme="light"] {
-  /* Core Surfaces (Light Console) */
-  --bg-canvas: hsl(210, 28%, 97%);
+:root[data-theme="light"],
+html[data-theme="light"],
+body[data-theme="light"] {
+  color-scheme: only light;
+
+  /* Core Surfaces (Bright Clean White & Alabaster) */
+  --bg-canvas: #f8fafc;
   --bg-panel: #ffffff;
-  --bg-elevated: hsl(210, 25%, 94%);
+  --bg-elevated: #ffffff;
   --bg-card: #ffffff;
-  --bg-hover: hsl(210, 24%, 90%);
-  --bg-code: hsl(210, 28%, 95%);
+  --bg-hover: #f0f7ff;
+  --bg-code: #f8fafc;
 
   /* Borders & Dividers */
-  --border-subtle: hsl(214, 22%, 86%);
-  --border-strong: hsl(214, 20%, 74%);
-  --border-accent: hsla(195, 88%, 38%, 0.4);
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-accent: rgba(2, 132, 199, 0.45);
 
   /* Typography */
-  --text-primary: hsl(215, 32%, 12%);
-  --text-secondary: hsl(215, 20%, 33%);
-  --text-muted: hsl(215, 15%, 48%);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
 
   /* Functional Accents */
-  --accent-cyan: hsl(195, 90%, 36%);
-  --accent-cyan-soft: hsla(195, 90%, 36%, 0.11);
-  --accent-emerald: hsl(154, 78%, 32%);
-  --accent-emerald-soft: hsla(154, 78%, 32%, 0.12);
-  --accent-amber: hsl(34, 92%, 38%);
-  --accent-amber-soft: hsla(34, 92%, 38%, 0.12);
-  --accent-coral: hsl(4, 78%, 46%);
-  --accent-coral-soft: hsla(4, 78%, 46%, 0.11);
+  --accent-cyan: #0284c7;
+  --accent-cyan-soft: rgba(2, 132, 199, 0.10);
+  --accent-emerald: #059669;
+  --accent-emerald-soft: rgba(5, 150, 105, 0.10);
+  --accent-amber: #d97706;
+  --accent-amber-soft: rgba(217, 119, 6, 0.10);
+  --accent-coral: #dc2626;
+  --accent-coral-soft: rgba(220, 38, 38, 0.08);
 
   /* Component-specific surface tokens */
   --btn-primary-text: #ffffff;
-  --topology-bg: radial-gradient(circle at 50% 45%, hsl(210, 40%, 99%), hsl(214, 30%, 92%));
-  --svg-link-stroke: hsl(214, 20%, 60%);
+  --topology-bg: radial-gradient(circle at 50% 45%, #ffffff, #f1f5f9);
+  --svg-link-stroke: #94a3b8;
   --svg-ne-fill: #ffffff;
-  --svg-ne-hover-fill: hsl(154, 65%, 95%);
-  --code-text: hsl(215, 35%, 16%);
-  --gql-intent-bg: hsl(210, 26%, 92%);
+  --svg-ne-hover-fill: #ecfdf5;
+  --code-text: #0f172a;
+  --gql-intent-bg: #f1f5f9;
 
-  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.10);
+  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.08);
 }
 
 *,

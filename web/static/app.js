@@ -112,8 +112,16 @@
     const isLight = state.theme === 'light';
     if (isLight) {
       document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.style.colorScheme = 'light';
+      if (document.body) {
+        document.body.setAttribute('data-theme', 'light');
+      }
     } else {
       document.documentElement.removeAttribute('data-theme');
+      document.documentElement.style.colorScheme = 'dark';
+      if (document.body) {
+        document.body.removeAttribute('data-theme');
+      }
     }
     if (elToggleTheme) {
       elToggleTheme.checked = isLight;

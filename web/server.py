@@ -275,7 +275,10 @@ def _extract_structured_tool_info(
 @app.get("/", include_in_schema=False)
 async def serve_index() -> FileResponse:
   """Serves the single-page web interface."""
-  return FileResponse(STATIC_DIR / "index.html")
+  return FileResponse(
+      STATIC_DIR / "index.html",
+      headers={"Cache-Control": "no-cache"},
+  )
 
 
 @app.get("/healthz")
